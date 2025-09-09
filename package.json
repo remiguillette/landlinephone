@@ -1,0 +1,17 @@
+{
+  "name": "Landline Phone",
+  "version": "1.0.0",
+  "description": "simulation Téléphone",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "Electron"
+  ],
+  "author": "Votre Nom",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.2"
+  }
+}

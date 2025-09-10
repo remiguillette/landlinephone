@@ -98,25 +98,45 @@ main {
   font-weight: bold;
 }
 
-/* --- Hero & Page Containers --- */
-/* Adopting the modern dark theme for all content containers */
-#hero-container,
-#page-container {
-  padding: 2rem;
-  margin: 10px;
-  border-radius: 16px; /* Larger radius for a softer look */
-  background-color: #1a1a1a;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Modern, soft shadow */
-}
-
-#hero-container {
+/* --- Hero Section --- */
+.hero-section-container {
+  background-color: #000000;
+  color: #f89422;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  padding: 48px 24px;
   text-align: center;
-  color: white;
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-#hero-container h1 {
-  font-size: 2.5em;
-  margin-bottom: 10px;
+.hero-section-container h1 {
+  font-size: 2.25rem; /* 36px */
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero-section-container p {
+  font-size: 1.125rem; /* 18px */
+  color: #d1d5db; /* Light gray */
+  margin-bottom: 24px;
+}
+
+/* Composition bar */
+.composition-bar {
+  background-color: #1f2937; /* Dark gray background */
+  border: 1px solid #374151; /* Subtle border */
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0 auto 24px auto;
+  max-width: 600px;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #9ca3af; /* Placeholder text */
+  font-family: monospace;
+  font-size: 1rem;
 }
 
 /* Main content */

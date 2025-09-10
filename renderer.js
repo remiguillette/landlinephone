@@ -85,10 +85,21 @@ function setupDialer() {
         });
     });
 
-    callButton.addEventListener('click', () => {
-        inCall = !inCall;
-        callIcon.classList.toggle('hidden', inCall);
-        hangupIcon.classList.toggle('hidden', !inCall);
+const callButton = document.getElementById('callButton');
+const callIcon = document.getElementById('call-icon');
+const hangupIcon = document.getElementById('hangup-icon');
+
+// 2. On ajoute un écouteur d'événement sur le clic
+callButton.addEventListener('click', () => {
+  // 3. On bascule les classes à chaque clic
+  
+  // Ajoute ou enlève la classe "in-call" du bouton
+  callButton.classList.toggle('in-call');
+  
+  // Ajoute ou enlève la classe "hidden" sur les icônes
+  callIcon.classList.toggle('hidden');
+  hangupIcon.classList.toggle('hidden');
+});
 
         if (inCall) {
             console.log(`Appel en cours vers : ${display.value}`);

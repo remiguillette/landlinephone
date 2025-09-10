@@ -107,21 +107,6 @@ body, html {
   filter: drop-shadow(0 0 5px rgba(248,148,34,0.3));
 }
 
-/* Option accessibilité : réduire/stopper les animations si l'utilisateur le demande */
-@media (prefers-reduced-motion: reduce) {
-  #wifi-bar-1,
-  #wifi-bar-2,
-  #wifi-bar-3 {    animation: none;
-    opacity: 1;
-    stroke-width: 2;
-    transform: none;
-  }
-  .signal-pulse {
-    filter: none;
-  }
-}
-
-
 /*
  * MODIFICATIONS CI-DESSOUS
  * Fusion des règles en double et ajout de la couleur et de la graisse de police.

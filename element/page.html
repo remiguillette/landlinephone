@@ -4,16 +4,15 @@
 <section id="hero-section" class="hero-section-container">
   <h1>Bienvenue</h1>
   <p>Composez un numéro ou choisissez une extension</p>
+  <!-- This is now the one and only display for the dialed number -->
   <input type="text" id="display" placeholder="Composer..." readonly />
-  <div id="composition-bar" class="composition-bar">
-    En attente de la composition...
-  </div>
 </section>
 
 <!-- This new wrapper will hold the dialpad and contacts side-by-side -->
 <div class="content-wrapper">
   <!-- Dialpad Section -->
   <section id="dialpad-section">
+    <!-- The duplicate display input has been removed from here -->
     <div class="dial-grid">
       <button class="dial-button">1</button>
       <button class="dial-button">2<span class="subtext">ABC</span></button>

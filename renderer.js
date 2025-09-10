@@ -120,7 +120,9 @@ function setupDialer() {
         onHold = !onHold;
         holdButton.classList.toggle('active', onHold);
         console.log(`Appel ${onHold ? 'mis en attente' : 'repris'}.`);
+           });
 }
+
 
 // Event triggered when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async () => {

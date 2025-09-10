@@ -20,3 +20,23 @@ const displayVersions = async () => {
 };
 
 displayVersions();
+
+document.addEventListener("DOMContentLoaded", function() {
+  const loadHTML = (elementId, filePath) => {
+    fetch(filePath)
+      .then(response => {
+        if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
+        return response.text();
+      })
+      .then(data => {
+        document.getElementById(elementId).innerHTML = data;
+      })
+      .catch(error => console.error('Erreur de chargement du fichier:', error));
+  };
+
+  loadHTML('main-header', './element/header.html');
+  loadHTML('hero-section', './element/hero.html');
+  loadHTML('bloc-section', './element/bloc.html');
+  loadHTML('bouton-container', './element/bouton.html');
+});
+

@@ -8,19 +8,17 @@ const createWindow = () => {
         width: 1200,
         height: 800,
         webPreferences: {
-            // __dirname pointe vers le répertoire du script actuel (racine du projet)
-            // path.join est utilisé pour créer des chemins de fichiers multiplateformes
-            preload: path.join(__dirname, 'preload.js'), // Optionnel mais bonne pratique
-            contextIsolation: true, // Recommandé pour la sécurité
-            nodeIntegration: false, // Recommandé pour la sécurité
+            preload: path.join(__dirname, 'preload.js'),
+            contextIsolation: true,
+            nodeIntegration: false,
         }
     });
 
+    // ===> AJOUTEZ CETTE LIGNE <===
+    mainWindow.setAutoHideMenuBar(true);
+
     // et charger le fichier index.html de l'application.
     mainWindow.loadFile('index.html');
-
-    // Ouvrir les outils de développement (DevTools).
-    // mainWindow.webContents.openDevTools();
 };
 
 // Cette méthode sera appelée quand Electron aura fini

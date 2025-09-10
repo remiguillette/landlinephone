@@ -24,7 +24,7 @@ html {
 /* This container defines the overall look for all pages (like the dial pad and contacts) */
 #main-container {
   display: flex;
-  flex-direction: column; /* Stacks sections vertically on mobile */
+  flex-direction: column; /* Stacks hero on top of the content wrapper */
   max-width: 1200px;
   margin: 2rem auto;
   border-radius: 16px;
@@ -33,11 +33,17 @@ html {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
 }
 
-@media (min-width: 1024px) {
-  #main-container {
-    flex-direction: row; /* Arranges sections horizontally on desktop */
-  }
+.content-wrapper {
+    display: flex;
+    flex-direction: column; /* Stacks dialpad and contacts on mobile */
 }
+
+@media (min-width: 768px) {
+    .content-wrapper {
+        flex-direction: row; /* Side-by-side on tablets and desktops */
+    }
+}
+
 
 /* --- Header & Navigation --- */
 #header-container {
@@ -94,7 +100,6 @@ html {
 
 /* --- Hero Section (Now a flex column) --- */
 .hero-section-container {
-  flex: 1; /* Assigns flex ratio */
   background-color: #111;
   color: #f89422;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -103,7 +108,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-right: 1px solid #222; /* Separator line */
+  border-bottom: 1px solid #222; /* Separator line */
 }
 
 .hero-section-container h1 {
@@ -144,6 +149,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border-right: 1px solid #222;
 }
 
 #display {
@@ -162,15 +168,15 @@ html {
 .dial-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
+  gap: 1rem;
   margin: 0 auto;
 }
 
 .dial-button {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 600;
   background: #f89422;
   color: #111;
@@ -225,8 +231,8 @@ html {
 }
 
 #callButton {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   background: #22c55e;
   color: white;
   box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
@@ -254,7 +260,6 @@ html {
   flex: 2; /* Assigns flex ratio */
   padding: 2rem;
   background: #111;
-  border-left: 1px solid #222;
 }
 
 #contacts-section h2 {
@@ -333,3 +338,4 @@ html {
   color: #f89422;
   font-size: 0.9rem;
 }
+

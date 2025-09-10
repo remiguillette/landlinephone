@@ -7,15 +7,7 @@ body, html {
     color: #1c1e21;
 }
 
-/* MODIFICATION : Le conteneur du header n'a plus besoin d'être stylisé comme une carte.
-   Il sert maintenant de conteneur pleine largeur.
-   J'ai donc retiré les styles de carte (padding, margin, radius, background, shadow).
-*/
-#header-container {
-    /* Suppression des anciens styles de carte */
-}
-
-/* Style pour les conteneurs de section pour une meilleure visualisation */
+/* Styles pour les conteneurs de section */
 #hero-container, #page-container {
     padding: 20px;
     margin: 10px;
@@ -24,29 +16,38 @@ body, html {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-/* Styles spécifiques pour le header - ADAPTÉS À VOTRE DEMANDE
-*/
+/*
+ * STYLES POUR LE HEADER (À AJOUTER ICI)
+ */
 #header-container nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px; /* Ajustement du padding pour un meilleur visuel */
-    
-    /* NOUVEAUX STYLES */
+    padding: 15px 30px;
     background-color: #000000; /* Fond noir */
     color: white;
     border-bottom: 2px solid #f89422; /* Bordure inférieure orange */
-
-    /* ANCIENS STYLES (remplacés ou supprimés) */
-    /* background-color: #333; */
-    /* border-radius: 8px; */
 }
 
-/* NOUVEAU : Conteneur pour le logo/titre à gauche */
 .logo-container {
     display: flex;
     align-items: center;
     gap: 15px;
+}
+
+.logo-container h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+#horloge {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Styles spécifiques pour la section héros */
+#hero-container {
+    text-align: center;
 }
 
 /* NOUVEAU : Style pour le titre du logo pour enlever les marges par défaut */

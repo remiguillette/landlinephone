@@ -39,7 +39,7 @@ body, html {
 
 .logo-container h1 {
     margin: 0;
-    font-size: 2 rem;
+    font-size: 2rem;
     color: #f89422;
     font-weight: 700;
 }
@@ -91,4 +91,40 @@ body, html {
 /* Contenu principal */
 #page-container p {
     line-height: 1.6;
+}
+
+/* --- Styles extraits de page.html --- */
+
+/* Style personnalisé pour le corps et la police */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Style pour les boutons du pavé numérique */
+/* Note: @apply nécessite un processus de build (ex: PostCSS) pour fonctionner. */
+/* Si vous n'en avez pas, ces styles ne seront pas appliqués. */
+.dial-button {
+    @apply w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-200 text-gray-800 text-2xl font-semibold flex items-center justify-center transition-all duration-200 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+}
+.dial-button .subtext {
+    @apply text-xs text-gray-500 absolute mt-8 font-normal tracking-widest;
+}
+
+/* Style pour la barre de défilement de la liste de contacts */
+.contact-list {
+    max-height: 480px;
+}
+.contact-list::-webkit-scrollbar {
+    width: 6px;
+}
+.contact-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+.contact-list::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+    border-radius: 10px;
+}
+.contact-list::-webkit-scrollbar-thumb:hover {
+    background: #888;
 }

@@ -1,24 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Mon App Electron Simple</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <title>Mon App Electron Simple</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>👋 Bonjour depuis Electron !</h1>
-    <p>Ceci est une application de bureau simple construite avec des technologies web.</p>
-    
-    <div id="versions">
-        Nous utilisons Node.js <span id="node-version"></span>,
-        Chromium <span id="chrome-version"></span>,
-        et Electron <span id="electron-version"></span>.
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-title">
+      <img src="logo.png" alt="Logo" class="logo">
+      <h1>Mon App</h1>
     </div>
+    <div class="clock" id="clock"></div>
+  </header>
 
-    <!-- Le script qui s'exécutera dans cette page -->
-    <script src="./renderer.js"></script>
+  <!-- HERO -->
+  <main id="hero">
+    <p>Chargement du contenu...</p>
+  </main>
+
+  <script>
+    // --- Horloge ---
+    function updateClock() {
+      const now = new Date();
+      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      document.getElementById("clock").textContent = now.toLocaleTimeString("fr-FR", options);
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // --- Fetch contenu hero ---
+    fetch("../element/hero.html")
+      .then(response => response.text())
+      .then(html => {
+        document.getElementById("hero").innerHTML = html;
+      })
+      .catch(err => {
+        document.getElementById("hero").innerHTML = "<p>Erreur de chargement du contenu.</p>";
+        console.error(err);
+      });
+  </script>
 </body>
 </html>

@@ -220,16 +220,35 @@ html {
   transform: scale(1.1);
 }
 
+/* Style de base du bouton (état "appeler") */
 #callButton {
   width: 65px;
   height: 65px;
-  background: #22c55e;
+  background: #22c55e; /* Vert */
   color: white;
+  border-radius: 50%; /* Pour un cercle parfait */
+  border: none;
+  cursor: pointer;
   box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+  
+  /* Pour centrer l'icône */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  /* Pour une transition douce */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Style du bouton quand l'appel est en cours */
+#callButton.in-call {
+  background: #ef4444; /* Rouge */
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+/* Classe pour cacher un élément */
 #hangup-icon.hidden, #call-icon.hidden {
-    display: none;
+  display: none;
 }
 
 #speakerButton.active, #holdButton.active {

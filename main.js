@@ -7,15 +7,13 @@ const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        autoHideMenuBar: true, // 👈 Ajout direct ici
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
         }
     });
-
-    // ===> AJOUTEZ CETTE LIGNE <===
-    mainWindow.setAutoHideMenuBar(true);
 
     // et charger le fichier index.html de l'application.
     mainWindow.loadFile('index.html');

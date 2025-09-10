@@ -83,13 +83,45 @@ function setupDialer() {
 
     // --- 4. ÉCOUTEURS D'ÉVÉNEMENTS ---
 
-    // Clic sur les touches du clavier numérique
-    dialButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            display.value += btn.textContent.trim().charAt(0);
-            updateCompositionBar();
-        });
+// Clic sur les touches du clavier numérique
+dialButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        let digit = btn.textContent.trim().charAt(0);
+
+        // Ajout seulement si c'est un chiffre
+        if (!/[0-9]/.test(digit)) return;
+
+        let current = display.value.replace(/\D/g, ""); // garder que les chiffres
+
+        // Bloquer après 14 chiffres (10 num + 4 extension)
+        if (current.length >= 14) return;
+
+        current += digit;
+
+        // Formatage (XXX) XXX-XXXX x1234
+        if (current.length <= 10) {
+            // Numéro principal
+            let formatted = "";
+            if (current.length > 0) formatted = "(" + current.substring(0, Math.min(3, current.length));
+            if (current.length >= 3) formatted += ") " + current.substring(3, Math.min(6, current.length));
+            if (current.length >= 6) formatted += "-" + current.substring(6, Math.min(10, current.length));
+            display.value = formatted;
+        } else {
+            // Extension
+            let main = current.substring(0, 10);
+            let ext = current.substring(10);
+
+            let formatted = "(" + main.substring(0, 3) + ") " +
+                            main.substring(3, 6) + "-" +
+                            main.substring(6, 10);
+
+            formatted += " x" + ext; // extension ajoutée
+            display.value = formatted;
+        }
+
+        updateCompositionBar();
     });
+});
 
     // Clic sur un contact
     contactItems.forEach(item => {

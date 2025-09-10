@@ -1,99 +1,85 @@
-<!-- page.html -->
-<!-- This is just an HTML fragment (not a full HTML document).
-     It is designed to be loaded dynamically via fetch() 
-     and inserted into an existing page. -->
+<!-- This new file combines the hero and page content into a single fragment -->
 
-<main>
-  <!-- Left section: Dial pad -->
-  <section id="dialpad-section">
-    <!-- Display -->
-    <input 
-      type="text" 
-      id="display" 
-      placeholder="Composer..." 
-      readonly
-    />
+<!-- Hero Section -->
+<section id="hero-section" class="hero-section-container">
+  <h1>Bienvenue</h1>
+  <p>Composez un numéro ou choisissez une extension</p>
+  <div id="composition-bar" class="composition-bar">
+    En attente de la composition...
+  </div>
+</section>
 
-    <!-- Number grid -->
-    <div class="dial-grid">
-      <button class="dial-button">1</button>
-      <button class="dial-button">2<span class="subtext">ABC</span></button>
-      <button class="dial-button">3<span class="subtext">DEF</span></button>
-      <button class="dial-button">4<span class="subtext">GHI</span></button>
-      <button class="dial-button">5<span class="subtext">JKL</span></button>
-      <button class="dial-button">6<span class="subtext">MNO</span></button>
-      <button class="dial-button">7<span class="subtext">PQRS</span></button>
-      <button class="dial-button">8<span class="subtext">TUV</span></button>
-      <button class="dial-button">9<span class="subtext">WXYZ</span></button>
-      <button class="dial-button">*</button>
-      <button class="dial-button">0<span class="subtext">+</span></button>
-      <button class="dial-button">#</button>
-    </div>
+<!-- Dialpad Section -->
+<section id="dialpad-section">
+  <input type="text" id="display" placeholder="Composer..." readonly />
+  <div class="dial-grid">
+    <button class="dial-button">1</button>
+    <button class="dial-button">2<span class="subtext">ABC</span></button>
+    <button class="dial-button">3<span class="subtext">DEF</span></button>
+    <button class="dial-button">4<span class="subtext">GHI</span></button>
+    <button class="dial-button">5<span class="subtext">JKL</span></button>
+    <button class="dial-button">6<span class="subtext">MNO</span></button>
+    <button class="dial-button">7<span class="subtext">PQRS</span></button>
+    <button class="dial-button">8<span class="subtext">TUV</span></button>
+    <button class="dial-button">9<span class="subtext">WXYZ</span></button>
+    <button class="dial-button">*</button>
+    <button class="dial-button">0<span class="subtext">+</span></button>
+    <button class="dial-button">#</button>
+  </div>
+  <div class="actions">
+    <button id="callButton" class="action-btn">
+      <svg id="call-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="32" height="32">
+        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+      </svg>
+      <svg id="hangup-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="32" height="32">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </button>
+    <button id="speakerButton" class="action-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="28" height="28">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+      </svg>
+    </button>
+  </div>
+</section>
 
-    <!-- Action buttons -->
-    <div class="actions">
-      <!-- Call/Hangup -->
-      <button id="callButton" class="action-btn">
-        <svg id="call-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="32" height="32">
-          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-        </svg>
-        <svg id="hangup-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="32" height="32">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      </button>
-
-      <!-- Speaker -->
-      <button id="speakerButton" class="action-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="28" height="28">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-        </svg>
-      </button>
-    </div>
-  </section>
-
-  <!-- Right section: Contacts -->
-  <section id="contacts-section">
-    <h2>Extensions</h2>
-    <div class="contact-list">
-      <!-- Example Contact -->
-      <div class="contact-item" data-ext="1201">
-        <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=AD" alt="Avatar">
-        <div class="flex-grow">
-          <p>Alain Dubois</p>
-          <p class="text-sm">Directeur Général</p>
-          <p class="text-xs">Bureau 101</p>
-        </div>
-        <div class="ext">Ext. 1201</div>
+<!-- Contacts Section -->
+<section id="contacts-section">
+  <h2>Extensions</h2>
+  <div class="contact-list">
+    <div class="contact-item" data-ext="1201">
+      <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=AD" alt="Avatar">
+      <div class="flex-grow">
+        <p>Alain Dubois</p>
+        <p class="text-sm">Directeur Général</p>
+        <p class="text-xs">Bureau 101</p>
       </div>
-
-      <div class="contact-item" data-ext="1202">
-        <img src="https://placehold.co/100x100/FEE2E2/B91C1C?text=BL" alt="Avatar">
-        <div class="flex-grow">
-          <p>Béatrice Leroy</p>
-          <p class="text-sm">Chef de Projet, TI</p>
-          <p class="text-xs">Bureau 205</p>
-        </div>
-        <div class="ext">Ext. 1202</div>
-      </div>
-
-      <div class="contact-item" data-ext="1203">
-        <img src="https://placehold.co/100x100/D1FAE5/065F46?text=CM" alt="Avatar">
-        <div class="flex-grow">
-          <p>Charles Martin</p>
-          <p class="text-sm">Comptable, Finances</p>
-          <p class="text-xs">Bureau 112</p>
-        </div>
-        <div class="ext">Ext. 1203</div>
-      </div>
-
-      <!-- Add more contacts as needed -->
+      <div class="ext">Ext. 1201</div>
     </div>
-  </section>
-</main>
+    <div class="contact-item" data-ext="1202">
+      <img src="https://placehold.co/100x100/FEE2E2/B91C1C?text=BL" alt="Avatar">
+      <div class="flex-grow">
+        <p>Béatrice Leroy</p>
+        <p class="text-sm">Chef de Projet, TI</p>
+        <p class="text-xs">Bureau 205</p>
+      </div>
+      <div class="ext">Ext. 1202</div>
+    </div>
+    <div class="contact-item" data-ext="1203">
+      <img src="https://placehold.co/100x100/D1FAE5/065F46?text=CM" alt="Avatar">
+      <div class="flex-grow">
+        <p>Charles Martin</p>
+        <p class="text-sm">Comptable, Finances</p>
+        <p class="text-xs">Bureau 112</p>
+      </div>
+      <div class="ext">Ext. 1203</div>
+    </div>
+  </div>
+</section>
 
+<!-- Script for interactivity -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
   const display = document.getElementById('display');
   const dialButtons = document.querySelectorAll('.dial-button');
   const callButton = document.getElementById('callButton');
@@ -101,25 +87,33 @@ document.addEventListener('DOMContentLoaded', () => {
   const hangupIcon = document.getElementById('hangup-icon');
   const speakerButton = document.getElementById('speakerButton');
   const contactItems = document.querySelectorAll('.contact-item');
+  const compositionBar = document.getElementById('composition-bar');
 
   let inCall = false;
   let speakerOn = false;
 
-  // Dial pad clicks
+  function updateCompositionBar() {
+      if (display.value) {
+          compositionBar.textContent = display.value;
+      } else {
+          compositionBar.textContent = 'En attente de la composition...';
+      }
+  }
+
   dialButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       display.value += btn.textContent.trim().charAt(0);
+      updateCompositionBar();
     });
   });
 
-  // Contact clicks
   contactItems.forEach(item => {
     item.addEventListener('click', () => {
       display.value = item.dataset.ext || '';
+      updateCompositionBar();
     });
   });
 
-  // Call / Hangup
   callButton.addEventListener('click', () => {
     inCall = !inCall;
     callIcon.classList.toggle('hidden', inCall);
@@ -130,14 +124,14 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       console.log('Appel terminé.');
       display.value = '';
+      updateCompositionBar();
     }
   });
 
-  // Speaker toggle
   speakerButton.addEventListener('click', () => {
     speakerOn = !speakerOn;
     speakerButton.classList.toggle('active', speakerOn);
     console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
   });
-});
 </script>
+

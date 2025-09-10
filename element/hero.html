@@ -1,58 +1,9 @@
-<!-- Ce fichier contient un fragment HTML et le CSS associé.
-  Il est conçu pour être chargé dynamiquement via une requête fetch() 
-  et inséré dans le DOM d'une page existante. -->
+<!-- hero.html -->
+<section id="hero-section" class="hero-section-container">
+  <h1>Bienvenue</h1>
+  <p>Composez un numéro ou choisissez une extension</p>
 
-<style>
-  /* Style pour le conteneur principal de la section */
-  .hero-section-container {
-    background-color: #000000;
-    color: ##f89422; /* Texte blanc cassé */
-    font-family: 'Inter', sans-serif, system-ui;
-    padding: 48px 24px;
-    text-align: center;
-    border-radius: 12px;
-    width: 100%;
-    box-sizing: border-box; /* S'assure que le padding est inclus dans la largeur */
-  }
-
-  /* Style pour le titre principal */
-  .hero-section-container h1 {
-    font-size: 2.25rem; /* 36px */
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-
-  /* Style pour le paragraphe de description */
-  .hero-section-container p {
-    font-size: 1.125rem; /* 18px */
-    color: #d1d5db; /* Gris clair */
-    margin-bottom: 24px;
-  }
-  
-  /* Barre de composition centrée */
-  .composition-bar {
-    background-color: #1f2937; /* Fond un peu plus clair */
-    border: 1px solid #374151; /* Bordure subtile */
-    border-radius: 8px;
-    padding: 16px;
-    margin: 0 auto 24px auto; /* Centre la barre horizontalement */
-    max-width: 600px;
-    min-height: 50px; /* Hauteur minimale pour la visibilité */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #9ca3af; /* Couleur du texte placeholder */
-  }
-
-  /* Style pour afficher les numéros de téléphone */
-  .phone-display {
-    font-family: monospace;
-    font-size: 1rem; /* 16px */
-    color: #6b7280; /* Gris plus foncé */
-    margin-top: 16px;
-  }
-</style>
-
-    <div id="composition-bar" class="composition-bar">
-      En attente de la composition...
-    </div>
+  <div id="composition-bar" class="composition-bar">
+    En attente de la composition...
+  </div>
+</section>

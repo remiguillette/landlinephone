@@ -13,7 +13,7 @@
 <div class="content-wrapper">
   <!-- Dialpad Section -->
   <section id="dialpad-section">
-    <input type="text" id="display" placeholder="Composer..." readonly />
+    <!-- The redundant input has been removed -->
     <div class="dial-grid">
       <button class="dial-button">1</button>
       <button class="dial-button">2<span class="subtext">ABC</span></button>
@@ -84,7 +84,7 @@
 
 <!-- Script for interactivity -->
 <script>
-  const display = document.getElementById('display');
+  // We no longer need the 'display' element, we'll work directly with a variable
   const dialButtons = document.querySelectorAll('.dial-button');
   const callButton = document.getElementById('callButton');
   const callIcon = document.getElementById('call-icon');
@@ -95,10 +95,11 @@
 
   let inCall = false;
   let speakerOn = false;
+  let dialedNumber = ''; // This variable will now store the number
 
   function updateCompositionBar() {
-      if (display.value) {
-          compositionBar.textContent = display.value;
+      if (dialedNumber) {
+          compositionBar.textContent = dialedNumber;
       } else {
           compositionBar.textContent = 'En attente de la composition...';
       }
@@ -106,14 +107,14 @@
 
   dialButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      display.value += btn.textContent.trim().charAt(0);
+      dialedNumber += btn.textContent.trim().charAt(0);
       updateCompositionBar();
     });
   });
 
   contactItems.forEach(item => {
     item.addEventListener('click', () => {
-      display.value = item.dataset.ext || '';
+      dialedNumber = item.dataset.ext || '';
       updateCompositionBar();
     });
   });
@@ -124,10 +125,10 @@
     hangupIcon.classList.toggle('hidden', !inCall);
 
     if (inCall) {
-      console.log(`Appel en cours vers : ${display.value}`);
+      console.log(`Appel en cours vers : ${dialedNumber}`);
     } else {
       console.log('Appel terminé.');
-      display.value = '';
+      dialedNumber = ''; // Reset the number
       updateCompositionBar();
     }
   });
@@ -138,4 +139,3 @@
     console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
   });
 </script>
-

@@ -35,76 +35,84 @@ body, html {
     gap: 15px;
 }
 
-/* Appliquer la classe "signal-pulse" sur le <svg> */
-.signal-pulse {
+/* Conteneur */
+.signal-pulse{
   --pulse-color: #f89422;
-  width: 32px; /* optionnel : conserve la taille du svg */
-  height: 32px;
-  display: inline-block;
-  /* léger glow sur l'ensemble */
-  filter: drop-shadow(0 0 6px rgba(248,148,34,0.25));
+  --pulse-duration: 900ms;       /* durée d'un cycle (même pour toutes les barres) */
+  display:inline-block;
+  width:32px;
+  height:32px;
+  color:var(--pulse-color);
+  filter: drop-shadow(0 0 6px rgba(248,148,34,0.18));
 }
 
-/* Assurer que les transforms se font autour du centre des paths */
-.signal-pulse path {
+/* Assure bons points d'origine pour les transforms */
+.signal-pulse path{
   transform-box: fill-box;
-  transform-origin: 50% 50%;
-  stroke: var(--pulse-color);
-  transition: stroke 150ms linear;
+  transform-origin: 50% 75%; /* origine un peu vers le bas pour 'pousser' vers le haut */
+  stroke: var(--pulse-color) !important;
+  transition: opacity 160ms linear, stroke-width 160ms linear, filter 160ms linear;
 }
 
-/* déco non animée pour le point inférieur (si tu veux le garder fixe) */
-.signal-pulse path[d^="M12 20"] {
+/* point inférieur - reste fixe */
+#wifi-dot{
   opacity: 1;
   stroke-width: 2;
+  stroke-linecap: round;
 }
 
-/* Classes / IDs des barres : on anime chacune avec un timing décalé */
-#wifi-bar-1,
-#wifi-bar-2,
-#wifi-bar-3 {
+/* barres : état par défaut (connecté visuel mais plus discret) */
+#wifi-bar-1, #wifi-bar-2, #wifi-bar-3{
   stroke-width: 2;
+  opacity: 0.32;
   stroke-linecap: round;
   stroke-linejoin: round;
-  /* préparation pour animation */
-  opacity: 0.35;
 }
 
-/* animation principale : légère montée en opacité + zoom/étirement */
-@keyframes wifi-pulse {
-  0% {
-    transform: scale(1);
-    opacity: 0.32;
-    stroke-width: 2;
-  }
-  50% {
-    transform: scale(1.08);
+/* keyframes : montée d'intensité puis retour */
+@keyframes wifi-wave {
+  0%   { transform: scale(1);   opacity: 0.28; stroke-width: 2; filter: none; }
+  45%  { transform: scale(1.12); opacity: 1;    stroke-width: 3; filter: drop-shadow(0 0 6px rgba(248,148,34,0.33)); }
+  100% { transform: scale(1);   opacity: 0.28; stroke-width: 2; filter: none; }
+}
+
+/* quand on cherche (classe ajoutée JS) : on lance l'animation sur les 3 barres */
+.signal-pulse.searching #wifi-bar-1,
+.signal-pulse.searching #wifi-bar-2,
+.signal-pulse.searching #wifi-bar-3 {
+  animation-name: wifi-wave;
+  animation-duration: var(--pulse-duration);
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(.4,0,.2,1);
+  animation-fill-mode: none;
+}
+
+/* Delais pour créer l'onde bottom -> top (synchronisé : même durée, décalage) */
+.signal-pulse.searching #wifi-bar-1 { animation-delay: 0ms;   }
+.signal-pulse.searching #wifi-bar-2 { animation-delay: 120ms; }
+.signal-pulse.searching #wifi-bar-3 { animation-delay: 240ms; }
+
+/* état connecté : arrêt de l'animation, rendu plein et stable */
+.signal-pulse.connected #wifi-bar-1,
+.signal-pulse.connected #wifi-bar-2,
+.signal-pulse.connected #wifi-bar-3 {
+  animation: none !important;
+  opacity: 1;
+  stroke-width: 2.5;
+}
+.signal-pulse.connected {
+  filter: drop-shadow(0 0 8px rgba(248,148,34,0.22));
+}
+
+/* Respect des préférences d'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .signal-pulse.searching #wifi-bar-1,
+  .signal-pulse.searching #wifi-bar-2,
+  .signal-pulse.searching #wifi-bar-3 {
+    animation: none;
     opacity: 1;
-    stroke-width: 3;
   }
-  100% {
-    transform: scale(1);
-    opacity: 0.32;
-    stroke-width: 2;
-  }
-}
-
-/* appliquer avec des durées + delays pour l'effet de vague */
-#wifi-bar-1 {
-  animation: wifi-pulse 1.0s ease-in-out infinite;
-  animation-delay: 0s;
-}
-
-#wifi-bar-2 {
-  animation: wifi-pulse 1.6s ease-in-out infinite;
-  animation-delay: 0.15s;
-}
-
-#wifi-bar-3 {
-  animation: wifi-pulse 2.2s ease-in-out infinite;
-  animation-delay: 0.3s;
-  /* un peu plus de glow pour la barre extérieure */
-  filter: drop-shadow(0 0 5px rgba(248,148,34,0.3));
+  .signal-pulse { filter: none; }
 }
 
 /*

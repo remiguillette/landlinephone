@@ -1,47 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-  <title>Mon App Electron Simple</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- La Content-Security-Policy est ajustée pour permettre les styles et scripts locaux -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+    <title>Mon Application Electron</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- HEADER -->
-  <header class="header">
-    <div class="logo-title">
-      <img src="logo.png" alt="Logo" class="logo">
-      <h1>Mon App</h1>
-    </div>
-    <div class="clock" id="clock"></div>
-  </header>
+    <!-- Les conteneurs où le contenu sera injecté par renderer.js -->
+    <header id="header-container"></header>
+    <main>
+        <section id="hero-container"></section>
+        <section id="page-container"></section>
+    </main>
 
-  <!-- HERO -->
-  <main id="hero">
-    <p>Chargement du contenu...</p>
-  </main>
-
-  <script>
-    // --- Horloge ---
-    function updateClock() {
-      const now = new Date();
-      const options = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
-      document.getElementById("clock").textContent = now.toLocaleTimeString("fr-FR", options);
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // --- Fetch contenu hero ---
-    fetch("../element/hero.html")
-      .then(response => response.text())
-      .then(html => {
-        document.getElementById("hero").innerHTML = html;
-      })
-      .catch(err => {
-        document.getElementById("hero").innerHTML = "<p>Erreur de chargement du contenu.</p>";
-        console.error(err);
-      });
-  </script>
+    <!-- Script du processus de rendu -->
+    <script src="renderer.js"></script>
 </body>
 </html>

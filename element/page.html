@@ -10,34 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* Style personnalisé pour le corps et la police */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Style pour les boutons du pavé numérique */
-        .dial-button {
-            @apply w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-200 text-gray-800 text-2xl font-semibold flex items-center justify-center transition-all duration-200 ease-in-out hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
-        }
-        .dial-button .subtext {
-            @apply text-xs text-gray-500 absolute mt-8 font-normal tracking-widest;
-        }
-        /* Style pour la barre de défilement de la liste de contacts */
-        .contact-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        .contact-list::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .contact-list::-webkit-scrollbar-thumb {
-            background: #a8a8a8;
-            border-radius: 10px;
-        }
-        .contact-list::-webkit-scrollbar-thumb:hover {
-            background: #888;
-        }
-    </style>
+    <!-- Lien vers votre feuille de style externe -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
@@ -55,14 +29,14 @@
                 <!-- Grille des boutons numériques -->
                 <div class="grid grid-cols-3 gap-4 place-items-center">
                     <button class="dial-button">1</button>
-                    <button class="dial-button">2<span class="subtext">ABC</span></button>
-                    <button class="dial-button">3<span class="subtext">DEF</span></button>
-                    <button class="dial-button">4<span class="subtext">GHI</span></button>
-                    <button class="dial-button">5<span class="subtext">JKL</span></button>
-                    <button class="dial-button">6<span class="subtext">MNO</span></button>
-                    <button class="dial-button">7<span class="subtext">PQRS</span></button>
-                    <button class="dial-button">8<span class="subtext">TUV</span></button>
-                    <button class="dial-button">9<span class="subtext">WXYZ</span></button>
+                    <button class="dial-button">2<span class="subtext"></span></button>
+                    <button class="dial-button">3<span class="subtext"></span></button>
+                    <button class="dial-button">4<span class="subtext"></span></button>
+                    <button class="dial-button">5<span class="subtext"></span></button>
+                    <button class="dial-button">6<span class="subtext"></span></button>
+                    <button class="dial-button">7<span class="subtext"></span></button>
+                    <button class="dial-button">8<span class="subtext"></span></button>
+                    <button class="dial-button">9<span class="subtext"></span></button>
                     <button class="dial-button">*</button>
                     <button class="dial-button">0<span class="subtext">+</span></button>
                     <button class="dial-button">#</button>
@@ -94,7 +68,7 @@
         <!-- Section droite: Liste des contacts -->
         <div class="w-full md:w-3/5 p-6 sm:p-8 border-t md:border-t-0 md:border-l border-gray-200">
             <h2 class="text-2xl font-bold text-gray-800 mb-4">Extensions</h2>
-            <div class="space-y-3 overflow-y-auto contact-list pr-2" style="max-height: 480px;">
+            <div class="space-y-3 overflow-y-auto contact-list pr-2">
 
                 <!-- Contact 1 -->
                 <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1201">

@@ -1,29 +1,46 @@
 /**
- * Function to load HTML content from a file and inject it into a page element.
+ * Asynchronously loads HTML content from a file and injects it into a page element.
+ * This version ensures that any <script> tags in the loaded content are executed.
  * @param {string} url - The path to the HTML file to load.
  * @param {string} elementId - The ID of the element to inject the content into.
  */
-const loadContent = (url, elementId) => {
-    fetch(url)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error loading ${url}: ${response.statusText}`);
-            }
-            return response.text();
-        })
-        .then(data => {
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.innerHTML = data;
-            } else {
-                console.error(`Element with ID '${elementId}' not found.`);
-            }
-        })
-        .catch(error => console.error("Error during fetch:", error));
+const loadContent = async (url, elementId) => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Error loading ${url}: ${response.statusText}`);
+        }
+        const data = await response.text();
+        const element = document.getElementById(elementId);
+
+        if (element) {
+            element.innerHTML = data;
+
+            // Find all script tags in the newly added content
+            const scripts = element.querySelectorAll("script");
+
+            // For each script, create a new script element and append it to the document
+            // This is a workaround to get the browser to execute them.
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement("script");
+                // Copy all attributes from the old script to the new one
+                Array.from(oldScript.attributes).forEach(attr => {
+                    newScript.setAttribute(attr.name, attr.value);
+                });
+                // Copy the content of the script
+                newScript.textContent = oldScript.textContent;
+                // Replace the old script tag with the new one to trigger execution
+                oldScript.parentNode.replaceChild(newScript, oldScript);
+            });
+        } else {
+            console.error(`Element with ID '${elementId}' not found.`);
+        }
+    } catch (error) {
+        console.error("Error during fetch:", error);
+    }
 };
 
 /**
- * START OF NEW CODE: Clock Logic
  * Function to update the clock in real-time.
  */
 function updateClock() {
@@ -32,25 +49,21 @@ function updateClock() {
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     
-    // Find the clock element. It might not exist right away, so we check.
     const clockElement = document.getElementById('horloge');
     if (clockElement) {
         clockElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
 }
-// END OF NEW CODE
 
 // Event triggered when the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Load the different components into their respective containers
-    loadContent('./element/header.html', 'header-container');
-    loadContent('./element/hero.html', 'hero-container');
-    loadContent('./element/page.html', 'page-container');
+document.addEventListener('DOMContentLoaded', async () => {
+    // Await each loadContent call to ensure they load sequentially
+    await loadContent('./element/header.html', 'header-container');
+    await loadContent('./element/hero.html', 'hero-container');
+    await loadContent('./element/page.html', 'page-container');
 
-    // START OF NEW CODE: Start the clock after loading content
-    // We start the clock on a 1-second interval.
+    // Start the clock after all content has been loaded
     setInterval(updateClock, 1000);
-    // Call it once immediately to display the time without a 1-second delay.
+    // Call it once immediately to prevent a 1-second delay on first load
     updateClock();
-    // END OF NEW CODE
 });

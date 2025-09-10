@@ -1,198 +1,143 @@
-<!-- This is just an HTML fragment, not a full document. Il est conçu pour être chargé dynamiquement via une requête fetch() 
-  et inséré dans le DOM d'une page existante. -->
- <!-- Conteneur principal -->
-    <main class="w-full max-w-4xl bg-white rounded-2xl shadow-2xl flex flex-col md:flex-row overflow-hidden">
-        
-        <!-- Section gauche: Pavé numérique -->
-        <div class="w-full md:w-2/5 p-6 sm:p-8 bg-gray-50 flex flex-col justify-between">
-            <div>
-                <!-- Écran d'affichage des numéros -->
-                <div class="relative mb-6">
-                    <input type="text" id="display" class="w-full bg-transparent text-center text-4xl font-light text-gray-800 border-none focus:ring-0 p-2 tracking-wider" placeholder="Composer...">
-                </div>
+<!-- page.html -->
+<!-- This is just an HTML fragment (not a full HTML document).
+     It is designed to be loaded dynamically via fetch() 
+     and inserted into an existing page. -->
 
-                <!-- Grille des boutons numériques -->
-                <div class="grid grid-cols-3 gap-4 place-items-center">
-                    <button class="dial-button">1</button>
-                    <button class="dial-button">2<span class="subtext"></span></button>
-                    <button class="dial-button">3<span class="subtext"></span></button>
-                    <button class="dial-button">4<span class="subtext"></span></button>
-                    <button class="dial-button">5<span class="subtext"></span></button>
-                    <button class="dial-button">6<span class="subtext"></span></button>
-                    <button class="dial-button">7<span class="subtext"></span></button>
-                    <button class="dial-button">8<span class="subtext"></span></button>
-                    <button class="dial-button">9<span class="subtext"></span></button>
-                    <button class="dial-button">*</button>
-                    <button class="dial-button">0<span class="subtext">+</span></button>
-                    <button class="dial-button">#</button>
-                </div>
-            </div>
+<main>
+  <!-- Left section: Dial pad -->
+  <section id="dialpad-section">
+    <!-- Display -->
+    <input 
+      type="text" 
+      id="display" 
+      placeholder="Composer..." 
+      readonly
+    />
 
-            <!-- Boutons d'action -->
-            <div class="flex items-center justify-center space-x-8 mt-8">
-                <button id="callButton" class="w-20 h-20 rounded-full bg-green-500 text-white shadow-lg transform hover:scale-105 transition-transform duration-200 flex items-center justify-center">
-                    <!-- Icône Téléphone (Appeler) -->
-                    <svg id="call-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                    </svg>
-                    <!-- Icône Téléphone (Raccrocher) -->
-                    <svg id="hangup-icon" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                </button>
-                <button id="speakerButton" class="w-12 h-12 rounded-full bg-gray-200 text-gray-600 transition-colors duration-200 flex items-center justify-center">
-                    <!-- Icône Haut-Parleur -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-                    </svg>
-                </button>
-            </div>
+    <!-- Number grid -->
+    <div class="dial-grid">
+      <button class="dial-button">1</button>
+      <button class="dial-button">2<span class="subtext">ABC</span></button>
+      <button class="dial-button">3<span class="subtext">DEF</span></button>
+      <button class="dial-button">4<span class="subtext">GHI</span></button>
+      <button class="dial-button">5<span class="subtext">JKL</span></button>
+      <button class="dial-button">6<span class="subtext">MNO</span></button>
+      <button class="dial-button">7<span class="subtext">PQRS</span></button>
+      <button class="dial-button">8<span class="subtext">TUV</span></button>
+      <button class="dial-button">9<span class="subtext">WXYZ</span></button>
+      <button class="dial-button">*</button>
+      <button class="dial-button">0<span class="subtext">+</span></button>
+      <button class="dial-button">#</button>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="actions">
+      <!-- Call/Hangup -->
+      <button id="callButton" class="action-btn">
+        <svg id="call-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="32" height="32">
+          <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+        </svg>
+        <svg id="hangup-icon" xmlns="http://www.w3.org/2000/svg" class="hidden" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="32" height="32">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
+
+      <!-- Speaker -->
+      <button id="speakerButton" class="action-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2" width="28" height="28">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Right section: Contacts -->
+  <section id="contacts-section">
+    <h2>Extensions</h2>
+    <div class="contact-list">
+      <!-- Example Contact -->
+      <div class="contact-item" data-ext="1201">
+        <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=AD" alt="Avatar">
+        <div class="flex-grow">
+          <p>Alain Dubois</p>
+          <p class="text-sm">Directeur Général</p>
+          <p class="text-xs">Bureau 101</p>
         </div>
+        <div class="ext">Ext. 1201</div>
+      </div>
 
-        <!-- Section droite: Liste des contacts -->
-        <div class="w-full md:w-3/5 p-6 sm:p-8 border-t md:border-t-0 md:border-l border-gray-200">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Extensions</h2>
-            <div class="space-y-3 overflow-y-auto contact-list pr-2">
-
-                <!-- Contact 1 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1201">
-                    <img src="https://placehold.co/100x100/E2E8F0/4A5568?text=AD" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Alain Dubois</p>
-                        <p class="text-sm text-gray-600">Directeur Général</p>
-                        <p class="text-xs text-gray-500">Bureau 101</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1201</p>
-                    </div>
-                </div>
-
-                <!-- Contact 2 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1202">
-                    <img src="https://placehold.co/100x100/FEE2E2/B91C1C?text=BL" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Béatrice Leroy</p>
-                        <p class="text-sm text-gray-600">Chef de Projet, TI</p>
-                        <p class="text-xs text-gray-500">Bureau 205</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1202</p>
-                    </div>
-                </div>
-
-                <!-- Contact 3 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1203">
-                    <img src="https://placehold.co/100x100/D1FAE5/065F46?text=CM" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Charles Martin</p>
-                        <p class="text-sm text-gray-600">Comptable, Finances</p>
-                        <p class="text-xs text-gray-500">Bureau 112</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1203</p>
-                    </div>
-                </div>
-
-                <!-- Contact 4 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1204">
-                    <img src="https://placehold.co/100x100/FEF3C7/92400E?text=DF" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Diane Fournier</p>
-                        <p class="text-sm text-gray-600">Responsable RH</p>
-                        <p class="text-xs text-gray-500">Bureau 108</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1204</p>
-                    </div>
-                </div>
-                
-                <!-- Contact 5 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1205">
-                    <img src="https://placehold.co/100x100/DBEAFE/1E40AF?text=EG" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Émile Gagnon</p>
-                        <p class="text-sm text-gray-600">Support Technique</p>
-                        <p class="text-xs text-gray-500">Bureau 210</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1205</p>
-                    </div>
-                </div>
-
-                <!-- Contact 6 -->
-                <div class="contact-item flex items-center p-3 bg-gray-100 hover:bg-blue-100 rounded-lg cursor-pointer transition-colors duration-200" data-ext="1206">
-                    <img src="https://placehold.co/100x100/EEDC82/6B4226?text=FN" alt="Avatar" class="w-14 h-14 rounded-full mr-4 object-cover">
-                    <div class="flex-grow">
-                        <p class="font-bold text-gray-900">Florence Nguyen</p>
-                        <p class="text-sm text-gray-600">Designer UX/UI</p>
-                        <p class="text-xs text-gray-500">Bureau 208</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-semibold text-blue-600">Ext. 1206</p>
-                    </div>
-                </div>
-            </div>
+      <div class="contact-item" data-ext="1202">
+        <img src="https://placehold.co/100x100/FEE2E2/B91C1C?text=BL" alt="Avatar">
+        <div class="flex-grow">
+          <p>Béatrice Leroy</p>
+          <p class="text-sm">Chef de Projet, TI</p>
+          <p class="text-xs">Bureau 205</p>
         </div>
-    </main>
+        <div class="ext">Ext. 1202</div>
+      </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const display = document.getElementById('display');
-            const dialButtons = document.querySelectorAll('.dial-button');
-            const callButton = document.getElementById('callButton');
-            const callIcon = document.getElementById('call-icon');
-            const hangupIcon = document.getElementById('hangup-icon');
-            const speakerButton = document.getElementById('speakerButton');
-            const contactItems = document.querySelectorAll('.contact-item');
+      <div class="contact-item" data-ext="1203">
+        <img src="https://placehold.co/100x100/D1FAE5/065F46?text=CM" alt="Avatar">
+        <div class="flex-grow">
+          <p>Charles Martin</p>
+          <p class="text-sm">Comptable, Finances</p>
+          <p class="text-xs">Bureau 112</p>
+        </div>
+        <div class="ext">Ext. 1203</div>
+      </div>
 
-            let inCall = false;
-            let speakerOn = false;
+      <!-- Add more contacts as needed -->
+    </div>
+  </section>
+</main>
 
-            // Gérer les clics sur les boutons du pavé numérique
-            dialButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Extrait seulement le premier caractère (le chiffre, *, ou #)
-                    const number = button.textContent.trim().charAt(0);
-                    display.value += number;
-                });
-            });
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const display = document.getElementById('display');
+  const dialButtons = document.querySelectorAll('.dial-button');
+  const callButton = document.getElementById('callButton');
+  const callIcon = document.getElementById('call-icon');
+  const hangupIcon = document.getElementById('hangup-icon');
+  const speakerButton = document.getElementById('speakerButton');
+  const contactItems = document.querySelectorAll('.contact-item');
 
-            // Gérer les clics sur les contacts
-            contactItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    const extension = item.dataset.ext;
-                    if (extension) {
-                        display.value = extension;
-                    }
-                });
-            });
+  let inCall = false;
+  let speakerOn = false;
 
-            // Gérer le bouton d'appel/raccrocher
-            callButton.addEventListener('click', () => {
-                inCall = !inCall;
-                callButton.classList.toggle('bg-green-500', !inCall);
-                callButton.classList.toggle('bg-red-500', inCall);
-                callIcon.classList.toggle('hidden', inCall);
-                hangupIcon.classList.toggle('hidden', !inCall);
-                
-                if (inCall) {
-                    // Simule le début d'un appel
-                    console.log(`Appel en cours vers : ${display.value}`);
-                } else {
-                    // Simule la fin d'un appel
-                    console.log('Appel terminé.');
-                    display.value = ''; // Efface l'écran après avoir raccroché
-                }
-            });
+  // Dial pad clicks
+  dialButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      display.value += btn.textContent.trim().charAt(0);
+    });
+  });
 
-            // Gérer le bouton haut-parleur
-            speakerButton.addEventListener('click', () => {
-                speakerOn = !speakerOn;
-                speakerButton.classList.toggle('bg-blue-500', speakerOn);
-                speakerButton.classList.toggle('text-white', speakerOn);
-                speakerButton.classList.toggle('bg-gray-200', !speakerOn);
-                speakerButton.classList.toggle('text-gray-600', !speakerOn);
-                console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
-            });
-        });
+  // Contact clicks
+  contactItems.forEach(item => {
+    item.addEventListener('click', () => {
+      display.value = item.dataset.ext || '';
+    });
+  });
+
+  // Call / Hangup
+  callButton.addEventListener('click', () => {
+    inCall = !inCall;
+    callIcon.classList.toggle('hidden', inCall);
+    hangupIcon.classList.toggle('hidden', !inCall);
+
+    if (inCall) {
+      console.log(`Appel en cours vers : ${display.value}`);
+    } else {
+      console.log('Appel terminé.');
+      display.value = '';
+    }
+  });
+
+  // Speaker toggle
+  speakerButton.addEventListener('click', () => {
+    speakerOn = !speakerOn;
+    speakerButton.classList.toggle('active', speakerOn);
+    console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
+  });
+});
+</script>

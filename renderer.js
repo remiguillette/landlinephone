@@ -1,42 +1,31 @@
-// renderer.js
-
-// Ce script s'exécute côté "client", dans la page web (index.html).
-// Il n'a pas accès directement aux API de Node.js par défaut pour des raisons de sécurité.
-
-// On récupère les éléments HTML pour afficher les versions
-const nodeVersion = document.getElementById('node-version');
-const chromeVersion = document.getElementById('chrome-version');
-const electronVersion = document.getElementById('electron-version');
-
-// On utilise la fonction `getVersions` que nous avons exposée
-// de manière sécurisée dans le script `preload.js`.
-const displayVersions = async () => {
-  // Ici, nous simulons que la récupération des versions est asynchrone
-  // pour montrer comment gérer les promesses.
-  // En réalité, `process.versions` est synchrone.
-  nodeVersion.innerText = process.versions.node;
-  chromeVersion.innerText = process.versions.chrome;
-  electronVersion.innerText = process.versions.electron;
+/**
+ * Fonction pour charger du contenu HTML depuis un fichier et l'injecter dans un élément de la page.
+ * @param {string} url - Le chemin vers le fichier HTML à charger.
+ * @param {string} elementId - L'ID de l'élément où injecter le contenu.
+ */
+const loadContent = (url, elementId) => {
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erreur de chargement de ${url}: ${response.statusText}`);
+            }
+            return response.text();
+        })
+        .then(data => {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = data;
+            } else {
+                console.error(`L'élément avec l'ID '${elementId}' n'a pas été trouvé.`);
+            }
+        })
+        .catch(error => console.error("Erreur lors du fetch:", error));
 };
 
-displayVersions();
-
-document.addEventListener("DOMContentLoaded", function() {
-  const loadHTML = (elementId, filePath) => {
-    fetch(filePath)
-      .then(response => {
-        if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
-        return response.text();
-      })
-      .then(data => {
-        document.getElementById(elementId).innerHTML = data;
-      })
-      .catch(error => console.error('Erreur de chargement du fichier:', error));
-  };
-
-  loadHTML('main-header', './element/header.html');
-  loadHTML('hero-section', './element/hero.html');
-  loadHTML('bloc-section', './element/bloc.html');
-  loadHTML('bouton-container', './element/bouton.html');
+// Événement déclenché lorsque le DOM est entièrement chargé
+document.addEventListener('DOMContentLoaded', () => {
+    // Charger les différents composants dans leurs conteneurs respectifs
+    loadContent('./element/header.html', 'header-container');
+    loadContent('./element/hero.html', 'hero-container');
+    loadContent('./element/page.html', 'page-container');
 });
-

@@ -35,6 +35,93 @@ body, html {
     gap: 15px;
 }
 
+/* Appliquer la classe "signal-pulse" sur le <svg> */
+.signal-pulse {
+  --pulse-color: #f89422;
+  width: 32px; /* optionnel : conserve la taille du svg */
+  height: 32px;
+  display: inline-block;
+  /* léger glow sur l'ensemble */
+  filter: drop-shadow(0 0 6px rgba(248,148,34,0.25));
+}
+
+/* Assurer que les transforms se font autour du centre des paths */
+.signal-pulse path {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  stroke: var(--pulse-color);
+  transition: stroke 150ms linear;
+}
+
+/* déco non animée pour le point inférieur (si tu veux le garder fixe) */
+.signal-pulse path[d^="M12 20"] {
+  opacity: 1;
+  stroke-width: 2;
+}
+
+/* Classes / IDs des barres : on anime chacune avec un timing décalé */
+#wifi-bar-1,
+#wifi-bar-2,
+#wifi-bar-3 {
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* préparation pour animation */
+  opacity: 0.35;
+}
+
+/* animation principale : légère montée en opacité + zoom/étirement */
+@keyframes wifi-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.32;
+    stroke-width: 2;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+    stroke-width: 3;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.32;
+    stroke-width: 2;
+  }
+}
+
+/* appliquer avec des durées + delays pour l'effet de vague */
+#wifi-bar-1 {
+  animation: wifi-pulse 1.0s ease-in-out infinite;
+  animation-delay: 0s;
+}
+
+#wifi-bar-2 {
+  animation: wifi-pulse 1.6s ease-in-out infinite;
+  animation-delay: 0.15s;
+}
+
+#wifi-bar-3 {
+  animation: wifi-pulse 2.2s ease-in-out infinite;
+  animation-delay: 0.3s;
+  /* un peu plus de glow pour la barre extérieure */
+  filter: drop-shadow(0 0 5px rgba(248,148,34,0.3));
+}
+
+/* Option accessibilité : réduire/stopper les animations si l'utilisateur le demande */
+@media (prefers-reduced-motion: reduce) {
+  #wifi-bar-1,
+  #wifi-bar-2,
+  #wifi-bar-3 {    animation: none;
+    opacity: 1;
+    stroke-width: 2;
+    transform: none;
+  }
+  .signal-pulse {
+    filter: none;
+  }
+}
+
+
 /*
  * MODIFICATIONS CI-DESSOUS
  * Fusion des règles en double et ajout de la couleur et de la graisse de police.

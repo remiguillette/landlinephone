@@ -100,7 +100,7 @@ html {
 
 /* --- Hero Section (Now a flex column) --- */
 .hero-section-container {
-  background-color: #111;
+  background-color: #000000;
   color: #f89422;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   padding: 24px;
@@ -119,7 +119,7 @@ html {
 
 .hero-section-container p {
   font-size: 1rem;
-  color: #d1d5db; /* Light gray */
+  color: #000000; /* Light gray */
   margin-bottom: 16px;
 }
 

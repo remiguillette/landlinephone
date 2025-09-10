@@ -1,51 +1,22 @@
-//main.js
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- La Content-Security-Policy est ajustée pour permettre les styles et scripts locaux -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'">
+    <title>Mon Application Electron</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Les conteneurs où le contenu sera injecté par renderer.js -->
+    <header id="header-container"></header>
+    <main>
+        <section id="hero-container"></section>
+        <section id="page-container"></section>
+    </main>
 
-// Les modules `app` et `BrowserWindow` sont importés depuis la bibliothèque Electron.
-// `app` contrôle le cycle de vie de votre application.
-// `BrowserWindow` crée et gère les fenêtres de l'application.
-// `path` est un module Node.js pour travailler avec les chemins de fichiers et de répertoires.
-const { app, BrowserWindow, ipcMain } = require('electron');
-const path = require('path');
-
-// Cette fonction crée une nouvelle fenêtre de navigateur.
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: {
-      // Le script de préchargement est essentiel pour la sécurité.
-      // Il s'exécute dans le contexte du rendu (la page web) mais a accès aux API Node.js.
-      // Il permet de faire le pont entre le monde de Node.js (main.js) et le monde du web (renderer.js).
-      preload: path.join(__dirname, 'preload.js')
-    }
-  });
-
-  // Charge le fichier index.html dans la nouvelle fenêtre.
-  win.loadFile('index.html');
-
-  // Optionnel : Ouvre les outils de développement (comme dans Chrome).
-  // win.webContents.openDevTools();
-};
-
-// Cette méthode sera appelée quand Electron aura fini
-// de s'initialiser et sera prêt à créer des fenêtres de navigation.
-// Certaines API ne peuvent être utilisées qu'après cet événement.
-app.whenReady().then(() => {
-  createWindow();
-
-  // Spécifique à macOS : Recrée une fenêtre si l'icône du dock est cliquée
-  // et qu'il n'y a pas d'autres fenêtres ouvertes.
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
-// Quitte l'application lorsque toutes les fenêtres sont fermées,
-// sauf sur macOS où il est courant que les applications restent actives.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
+    <!-- Script du processus de rendu -->
+    <script src="renderer.js"></script>
+</body>
+</html>

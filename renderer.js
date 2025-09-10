@@ -104,6 +104,22 @@ function setupDialer() {
         speakerButton.classList.toggle('active', speakerOn);
         console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
     });
+    // Erase last digit
+    eraseButton.addEventListener('click', () => {
+        display.value = display.value.slice(0, -1);
+        updateCompositionBar();
+    });
+
+    // Hold / Unhold
+    holdButton.addEventListener('click', () => {
+        if (!inCall) {
+            console.log("Impossible de mettre en attente : aucun appel en cours.");
+            return;
+        }
+
+        onHold = !onHold;
+        holdButton.classList.toggle('active', onHold);
+        console.log(`Appel ${onHold ? 'mis en attente' : 'repris'}.`);
 }
 
 // Event triggered when the DOM is fully loaded

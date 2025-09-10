@@ -17,7 +17,7 @@ body, html {
 }
 
 /*
- * STYLES POUR LE HEADER (À AJOUTER ICI)
+ * STYLES POUR LE HEADER
  */
 #header-container nav {
     display: flex;
@@ -25,7 +25,7 @@ body, html {
     align-items: center;
     padding: 15px 30px;
     background-color: #000000; /* Fond noir */
-    color: white;
+    color: white; /* Couleur par défaut pour les autres textes du header */
     border-bottom: 2px solid #f89422; /* Bordure inférieure orange */
 }
 
@@ -35,31 +35,21 @@ body, html {
     gap: 15px;
 }
 
+/*
+ * MODIFICATIONS CI-DESSOUS
+ * Fusion des règles en double et ajout de la couleur et de la graisse de police.
+ */
 .logo-container h1 {
     margin: 0;
     font-size: 1.5rem;
+    color: #f89422;      /* <-- AJOUT : Couleur orange pour le titre */
+    font-weight: 700;    /* <-- AJOUT : Police en gras (700) */
 }
 
 #horloge {
     font-size: 1.2rem;
-    font-weight: bold;
-}
-
-/* Styles spécifiques pour la section héros */
-#hero-container {
-    text-align: center;
-}
-
-/* NOUVEAU : Style pour le titre du logo pour enlever les marges par défaut */
-.logo-container h1 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-/* NOUVEAU : Style pour l'horloge à droite */
-#horloge {
-    font-size: 1.2rem;
-    font-weight: bold; /* Texte en gras comme demandé */
+    color: #f89422;      /* <-- AJOUT : Couleur orange pour l'horloge */
+    font-weight: 700;    /* <-- MODIFIÉ : 'bold' est remplacé par 700 pour plus de précision */
 }
 
 /* Styles pour les liens de navigation (si vous en ajoutez) */

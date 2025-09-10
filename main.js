@@ -1,4 +1,4 @@
-/ main.js
+//main.js
 
 // Les modules `app` et `BrowserWindow` sont importés depuis la bibliothèque Electron.
 // `app` contrôle le cycle de vie de votre application.

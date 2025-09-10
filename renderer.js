@@ -54,6 +54,64 @@ function updateClock() {
         clockElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
 }
+<!-- Script for interactivity -->
+<script>
+  const display = document.getElementById('display');
+  const dialButtons = document.querySelectorAll('.dial-button');
+  const callButton = document.getElementById('callButton');
+  const callIcon = document.getElementById('call-icon');
+  const hangupIcon = document.getElementById('hangup-icon');
+  const speakerButton = document.getElementById('speakerButton');
+  const contactItems = document.querySelectorAll('.contact-item');
+  const compositionBar = document.getElementById('composition-bar');
+
+  let inCall = false;
+  let speakerOn = false;
+
+  function updateCompositionBar() {
+      if (display.value) {
+          compositionBar.textContent = display.value;
+      } else {
+          compositionBar.textContent = 'En attente de la composition...';
+      }
+  }
+
+  dialButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      display.value += btn.textContent.trim().charAt(0);
+      updateCompositionBar();
+    });
+  });
+
+  contactItems.forEach(item => {
+    item.addEventListener('click', () => {
+      display.value = item.dataset.ext || '';
+      updateCompositionBar();
+    });
+  });
+
+  callButton.addEventListener('click', () => {
+    inCall = !inCall;
+    callIcon.classList.toggle('hidden', inCall);
+    hangupIcon.classList.toggle('hidden', !inCall);
+
+    if (inCall) {
+      console.log(`Appel en cours vers : ${display.value}`);
+    } else {
+      console.log('Appel terminé.');
+      display.value = '';
+      updateCompositionBar();
+    }
+  });
+
+  speakerButton.addEventListener('click', () => {
+    speakerOn = !speakerOn;
+    speakerButton.classList.toggle('active', speakerOn);
+    console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
+  });
+</script>
+
+
 
 // Event triggered when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async () => {

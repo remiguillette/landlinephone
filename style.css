@@ -51,84 +51,10 @@ body, html {
     gap: 10px;
 }
 
-.signal-pulse {
-    --pulse-color: #f89422;
-    --pulse-duration: 900ms;
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    color: var(--pulse-color);
-    filter: drop-shadow(0 0 6px rgba(248,148,34,0.18));
-}
-
-.signal-pulse path {
-    transform-box: fill-box;
-    transform-origin: 50% 75%;
-    stroke: var(--pulse-color) !important;
-    transition: opacity 160ms linear, stroke-width 160ms linear, filter 160ms linear;
-}
-
 #wifi-dot {
     opacity: 1;
     stroke-width: 2;
     stroke-linecap: round;
-}
-
-#wifi-bar-1, #wifi-bar-2, #wifi-bar-3 {
-    stroke-width: 2;
-    opacity: 0.32;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-/* Animation pour les barres WiFi */
-@keyframes wifi-wave {
-    0% { transform: scale(1); opacity: 0.28; stroke-width: 2; filter: none; }
-    45% { transform: scale(1.12); opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(248,148,34,0.33)); }
-    100% { transform: scale(1); opacity: 0.28; stroke-width: 2; filter: none; }
-}
-
-/* Animation spécifique pour chaque barre */
-.signal-pulse.searching #wifi-bar-1 {
-    animation-name: wifi-wave;
-    animation-duration: var(--pulse-duration);
-    animation-delay: 0ms;
-}
-
-.signal-pulse.searching #wifi-bar-2 {
-    animation-name: wifi-wave;
-    animation-duration: var(--pulse-duration);
-    animation-delay: 120ms;
-}
-
-.signal-pulse.searching #wifi-bar-3 {
-    animation-name: wifi-wave;
-    animation-duration: var(--pulse-duration);
-    animation-delay: 240ms;
-}
-
-/* Quand l'élément est connecté, l'animation s'arrête */
-.signal-pulse.connected #wifi-bar-1,
-.signal-pulse.connected #wifi-bar-2,
-.signal-pulse.connected #wifi-bar-3 {
-    animation: none !important;
-    opacity: 1;
-    stroke-width: 2.5;
-}
-
-.signal-pulse.connected {
-    filter: drop-shadow(0 0 8px rgba(248,148,34,0.22));
-}
-
-/* Respect des préférences d'accessibilité */
-@media (prefers-reduced-motion: reduce) {
-    .signal-pulse.searching #wifi-bar-1,
-    .signal-pulse.searching #wifi-bar-2,
-    .signal-pulse.searching #wifi-bar-3 {
-        animation: none;
-        opacity: 1;
-    }
-    .signal-pulse { filter: none; }
 }
 
 /* Horloge */

@@ -1,39 +1,11 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Header avec Horloge</title>
-    <link rel="stylesheet" href="header.css">
-</head>
-<body>
-
-    <header>
-        <div class="logo-container">
-            <h1 class="titre-logo">Mon Site</h1>
-        </div>
-        <div class="clock-container">
-            <span id="horloge"></span>
-        </div>
-    </header>
-
-    <script>
-        // Script pour l'horloge en temps réel
-        function mettreAJourHorloge() {
-            const maintenant = new Date();
-            const heures = String(maintenant.getHours()).padStart(2, '0');
-            const minutes = String(maintenant.getMinutes()).padStart(2, '0');
-            const secondes = String(maintenant.getSeconds()).padStart(2, '0');
-            
-            document.getElementById('horloge').textContent = `${heures}:${minutes}:${secondes}`;
-        }
-
-        // Mettre à jour l'horloge chaque seconde
-        setInterval(mettreAJourHorloge, 1000);
-
-        // Afficher l'horloge dès le chargement de la page
-        mettreAJourHorloge();
-    </script>
-
-</body>
-</html>
+<!-- This is just an HTML fragment, not a full document. -->
+<nav>
+    <div class="logo-container">
+        <!-- ANNOTATION : Ajoutez votre icône ici si besoin -->
+        <!-- <img src="path/to/icon.svg" alt="Logo"> -->
+        <h1>Mon Site</h1>
+    </div>
+    <div class="clock-container">
+        <span id="horloge"></span>
+    </div>
+</nav>

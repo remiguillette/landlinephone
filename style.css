@@ -7,7 +7,7 @@ body, html {
     color: #1c1e21;
 }
 
-/* Styles pour les conteneurs de section */
+/* Styles généraux pour les conteneurs */
 #hero-container, #page-container {
     padding: 20px;
     margin: 10px;
@@ -16,17 +16,19 @@ body, html {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
 
-/*
- * STYLES POUR LE HEADER
- */
+/* Styles pour le header */
+#header-container {
+    width: 100%;
+    background-color: #000000;
+    color: white;
+    border-bottom: 2px solid #f89422;
+}
+
 #header-container nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background-color: #000000; /* Fond noir */
-    color: white; /* Couleur par défaut pour les autres textes du header */
-    border-bottom: 2px solid #f89422; /* Bordure inférieure orange */
 }
 
 .logo-container {
@@ -35,101 +37,109 @@ body, html {
     gap: 15px;
 }
 
-/* Conteneur */
-.signal-pulse{
-  --pulse-color: #f89422;
-  --pulse-duration: 900ms;       /* durée d'un cycle (même pour toutes les barres) */
-  display:inline-block;
-  width:32px;
-  height:32px;
-  color:var(--pulse-color);
-  filter: drop-shadow(0 0 6px rgba(248,148,34,0.18));
+.logo-container h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #f89422;
+    font-weight: 700;
 }
 
-/* Assure bons points d'origine pour les transforms */
-.signal-pulse path{
-  transform-box: fill-box;
-  transform-origin: 50% 75%; /* origine un peu vers le bas pour 'pousser' vers le haut */
-  stroke: var(--pulse-color) !important;
-  transition: opacity 160ms linear, stroke-width 160ms linear, filter 160ms linear;
+/* Styles pour l'icône réseau et l'horloge */
+#network-container, #horloge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* point inférieur - reste fixe */
-#wifi-dot{
-  opacity: 1;
-  stroke-width: 2;
-  stroke-linecap: round;
+.signal-pulse {
+    --pulse-color: #f89422;
+    --pulse-duration: 900ms;
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    color: var(--pulse-color);
+    filter: drop-shadow(0 0 6px rgba(248,148,34,0.18));
 }
 
-/* barres : état par défaut (connecté visuel mais plus discret) */
-#wifi-bar-1, #wifi-bar-2, #wifi-bar-3{
-  stroke-width: 2;
-  opacity: 0.32;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+.signal-pulse path {
+    transform-box: fill-box;
+    transform-origin: 50% 75%;
+    stroke: var(--pulse-color) !important;
+    transition: opacity 160ms linear, stroke-width 160ms linear, filter 160ms linear;
 }
 
-/* keyframes : montée d'intensité puis retour */
+#wifi-dot {
+    opacity: 1;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+#wifi-bar-1, #wifi-bar-2, #wifi-bar-3 {
+    stroke-width: 2;
+    opacity: 0.32;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Animation pour les barres WiFi */
 @keyframes wifi-wave {
-  0%   { transform: scale(1);   opacity: 0.28; stroke-width: 2; filter: none; }
-  45%  { transform: scale(1.12); opacity: 1;    stroke-width: 3; filter: drop-shadow(0 0 6px rgba(248,148,34,0.33)); }
-  100% { transform: scale(1);   opacity: 0.28; stroke-width: 2; filter: none; }
+    0% { transform: scale(1); opacity: 0.28; stroke-width: 2; filter: none; }
+    45% { transform: scale(1.12); opacity: 1; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(248,148,34,0.33)); }
+    100% { transform: scale(1); opacity: 0.28; stroke-width: 2; filter: none; }
 }
 
-/* quand on cherche (classe ajoutée JS) : on lance l'animation sur les 3 barres */
-.signal-pulse.searching #wifi-bar-1,
-.signal-pulse.searching #wifi-bar-2,
+/* Animation spécifique pour chaque barre */
+.signal-pulse.searching #wifi-bar-1 {
+    animation-name: wifi-wave;
+    animation-duration: var(--pulse-duration);
+    animation-delay: 0ms;
+}
+
+.signal-pulse.searching #wifi-bar-2 {
+    animation-name: wifi-wave;
+    animation-duration: var(--pulse-duration);
+    animation-delay: 120ms;
+}
+
 .signal-pulse.searching #wifi-bar-3 {
-  animation-name: wifi-wave;
-  animation-duration: var(--pulse-duration);
-  animation-iteration-count: infinite;
-  animation-timing-function: cubic-bezier(.4,0,.2,1);
-  animation-fill-mode: none;
+    animation-name: wifi-wave;
+    animation-duration: var(--pulse-duration);
+    animation-delay: 240ms;
 }
 
-/* Delais pour créer l'onde bottom -> top (synchronisé : même durée, décalage) */
-.signal-pulse.searching #wifi-bar-1 { animation-delay: 0ms;   }
-.signal-pulse.searching #wifi-bar-2 { animation-delay: 120ms; }
-.signal-pulse.searching #wifi-bar-3 { animation-delay: 240ms; }
-
-/* état connecté : arrêt de l'animation, rendu plein et stable */
+/* Quand l'élément est connecté, l'animation s'arrête */
 .signal-pulse.connected #wifi-bar-1,
 .signal-pulse.connected #wifi-bar-2,
 .signal-pulse.connected #wifi-bar-3 {
-  animation: none !important;
-  opacity: 1;
-  stroke-width: 2.5;
+    animation: none !important;
+    opacity: 1;
+    stroke-width: 2.5;
 }
+
 .signal-pulse.connected {
-  filter: drop-shadow(0 0 8px rgba(248,148,34,0.22));
+    filter: drop-shadow(0 0 8px rgba(248,148,34,0.22));
 }
 
 /* Respect des préférences d'accessibilité */
 @media (prefers-reduced-motion: reduce) {
-  .signal-pulse.searching #wifi-bar-1,
-  .signal-pulse.searching #wifi-bar-2,
-  .signal-pulse.searching #wifi-bar-3 {
-    animation: none;
-    opacity: 1;
-  }
-  .signal-pulse { filter: none; }
+    .signal-pulse.searching #wifi-bar-1,
+    .signal-pulse.searching #wifi-bar-2,
+    .signal-pulse.searching #wifi-bar-3 {
+        animation: none;
+        opacity: 1;
+    }
+    .signal-pulse { filter: none; }
 }
 
-/*
- * MODIFICATIONS CI-DESSOUS
- * Fusion des règles en double et ajout de la couleur et de la graisse de police.
- */
-.logo-container h1 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #f89422;      /* <-- AJOUT : Couleur orange pour le titre */
-    font-weight: 700;    /* <-- AJOUT : Police en gras (700) */
-}
-
+/* Horloge */
 #horloge {
     font-size: 1.2rem;
-    color: #f89422;      /* <-- AJOUT : Couleur orange pour l'horloge */
-    font-weight: 700;    /* <-- MODIFIÉ : 'bold' est remplacé par 700 pour plus de précision */
+    color: #f89422;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 /* Styles pour les liens de navigation (si vous en ajoutez) */
@@ -140,7 +150,7 @@ body, html {
     font-weight: bold;
 }
 
-/* Styles spécifiques pour la section héros */
+/* Styles pour la section héros */
 #hero-container {
     text-align: center;
     background-color: #4a90e2;
@@ -152,7 +162,7 @@ body, html {
     margin-bottom: 10px;
 }
 
-/* Styles pour le contenu principal */
+/* Contenu principal */
 #page-container p {
     line-height: 1.6;
 }

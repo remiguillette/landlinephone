@@ -1,8 +1,6 @@
 /**
  * Asynchronously loads HTML content from a file and injects it into a page element.
- * This version ensures that any <script> tags in the loaded content are executed.
- * @param {string} url - The path to the HTML file to load.
- * @param {string} elementId - The ID of the element to inject the content into.
+ * Ensures that any <script> tags in the loaded content are executed.
  */
 const loadContent = async (url, elementId) => {
     try {
@@ -16,20 +14,14 @@ const loadContent = async (url, elementId) => {
         if (element) {
             element.innerHTML = data;
 
-            // Find all script tags in the newly added content
+            // Re-execute <script> tags inside loaded content
             const scripts = element.querySelectorAll("script");
-
-            // For each script, create a new script element and append it to the document
-            // This is a workaround to get the browser to execute them.
             scripts.forEach(oldScript => {
                 const newScript = document.createElement("script");
-                // Copy all attributes from the old script to the new one
                 Array.from(oldScript.attributes).forEach(attr => {
                     newScript.setAttribute(attr.name, attr.value);
                 });
-                // Copy the content of the script
                 newScript.textContent = oldScript.textContent;
-                // Replace the old script tag with the new one to trigger execution
                 oldScript.parentNode.replaceChild(newScript, oldScript);
             });
         } else {
@@ -54,74 +46,76 @@ function updateClock() {
         clockElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
 }
-<!-- Script for interactivity -->
-<script>
-  const display = document.getElementById('display');
-  const dialButtons = document.querySelectorAll('.dial-button');
-  const callButton = document.getElementById('callButton');
-  const callIcon = document.getElementById('call-icon');
-  const hangupIcon = document.getElementById('hangup-icon');
-  const speakerButton = document.getElementById('speakerButton');
-  const contactItems = document.querySelectorAll('.contact-item');
-  const compositionBar = document.getElementById('composition-bar');
 
-  let inCall = false;
-  let speakerOn = false;
+/**
+ * Phone dialer logic (moved from inline <script> in page.html)
+ */
+function setupDialer() {
+    const display = document.getElementById('display');
+    const dialButtons = document.querySelectorAll('.dial-button');
+    const callButton = document.getElementById('callButton');
+    const callIcon = document.getElementById('call-icon');
+    const hangupIcon = document.getElementById('hangup-icon');
+    const speakerButton = document.getElementById('speakerButton');
+    const contactItems = document.querySelectorAll('.contact-item');
+    const compositionBar = document.getElementById('composition-bar');
 
-  function updateCompositionBar() {
-      if (display.value) {
-          compositionBar.textContent = display.value;
-      } else {
-          compositionBar.textContent = 'En attente de la composition...';
-      }
-  }
+    let inCall = false;
+    let speakerOn = false;
 
-  dialButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      display.value += btn.textContent.trim().charAt(0);
-      updateCompositionBar();
-    });
-  });
-
-  contactItems.forEach(item => {
-    item.addEventListener('click', () => {
-      display.value = item.dataset.ext || '';
-      updateCompositionBar();
-    });
-  });
-
-  callButton.addEventListener('click', () => {
-    inCall = !inCall;
-    callIcon.classList.toggle('hidden', inCall);
-    hangupIcon.classList.toggle('hidden', !inCall);
-
-    if (inCall) {
-      console.log(`Appel en cours vers : ${display.value}`);
-    } else {
-      console.log('Appel terminé.');
-      display.value = '';
-      updateCompositionBar();
+    function updateCompositionBar() {
+        if (display.value) {
+            compositionBar.textContent = display.value;
+        } else {
+            compositionBar.textContent = 'En attente de la composition...';
+        }
     }
-  });
 
-  speakerButton.addEventListener('click', () => {
-    speakerOn = !speakerOn;
-    speakerButton.classList.toggle('active', speakerOn);
-    console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
-  });
-</script>
+    dialButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            display.value += btn.textContent.trim().charAt(0);
+            updateCompositionBar();
+        });
+    });
 
+    contactItems.forEach(item => {
+        item.addEventListener('click', () => {
+            display.value = item.dataset.ext || '';
+            updateCompositionBar();
+        });
+    });
 
+    callButton.addEventListener('click', () => {
+        inCall = !inCall;
+        callIcon.classList.toggle('hidden', inCall);
+        hangupIcon.classList.toggle('hidden', !inCall);
+
+        if (inCall) {
+            console.log(`Appel en cours vers : ${display.value}`);
+        } else {
+            console.log('Appel terminé.');
+            display.value = '';
+            updateCompositionBar();
+        }
+    });
+
+    speakerButton.addEventListener('click', () => {
+        speakerOn = !speakerOn;
+        speakerButton.classList.toggle('active', speakerOn);
+        console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
+    });
+}
 
 // Event triggered when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', async () => {
-    // Await each loadContent call to ensure they load sequentially
     await loadContent('./element/header.html', 'header-container');
     await loadContent('./element/hero.html', 'hero-container');
     await loadContent('./element/page.html', 'page-container');
 
-    // Start the clock after all content has been loaded
+    // Start the clock
     setInterval(updateClock, 1000);
-    // Call it once immediately to prevent a 1-second delay on first load
     updateClock();
+
+    // Initialize dialer AFTER page.html is injected
+    setupDialer();
 });

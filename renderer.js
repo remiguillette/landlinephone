@@ -48,21 +48,31 @@ function updateClock() {
 }
 
 /**
- * Phone dialer logic (moved from inline <script> in page.html)
+ * Phone dialer logic
  */
 function setupDialer() {
+    // --- 1. SÉLECTION DE TOUS LES ÉLÉMENTS (une seule fois au début) ---
     const display = document.getElementById('display');
     const dialButtons = document.querySelectorAll('.dial-button');
+    const contactItems = document.querySelectorAll('.contact-item');
+    const compositionBar = document.getElementById('composition-bar');
+    
+    // Boutons d'action
     const callButton = document.getElementById('callButton');
     const callIcon = document.getElementById('call-icon');
     const hangupIcon = document.getElementById('hangup-icon');
     const speakerButton = document.getElementById('speakerButton');
-    const contactItems = document.querySelectorAll('.contact-item');
-    const compositionBar = document.getElementById('composition-bar');
+    
+    // AJOUT : Les boutons manquants doivent être déclarés
+    const eraseButton = document.getElementById('eraseButton'); // Assurez-vous que cet ID existe dans votre HTML
+    const holdButton = document.getElementById('holdButton');   // Assurez-vous que cet ID existe dans votre HTML
 
+    // --- 2. VARIABLES D'ÉTAT ---
     let inCall = false;
     let speakerOn = false;
+    let onHold = false; // AJOUT : Variable manquante pour la mise en attente
 
+    // --- 3. FONCTIONS UTILITAIRES ---
     function updateCompositionBar() {
         if (display.value) {
             compositionBar.textContent = display.value;
@@ -71,6 +81,9 @@ function setupDialer() {
         }
     }
 
+    // --- 4. ÉCOUTEURS D'ÉVÉNEMENTS ---
+
+    // Clic sur les touches du clavier numérique
     dialButtons.forEach(btn => {
         btn.addEventListener('click', () => {
             display.value += btn.textContent.trim().charAt(0);
@@ -78,6 +91,7 @@ function setupDialer() {
         });
     });
 
+    // Clic sur un contact
     contactItems.forEach(item => {
         item.addEventListener('click', () => {
             display.value = item.dataset.ext || '';
@@ -85,53 +99,49 @@ function setupDialer() {
         });
     });
 
-const callButton = document.getElementById('callButton');
-const callIcon = document.getElementById('call-icon');
-const hangupIcon = document.getElementById('hangup-icon');
+    // Clic sur le bouton Appeler / Raccrocher (CORRIGÉ ET FUSIONNÉ)
+    callButton.addEventListener('click', () => {
+        // On inverse l'état de l'appel
+        inCall = !inCall;
 
-// 2. On ajoute un écouteur d'événement sur le clic
-callButton.addEventListener('click', () => {
-  // 3. On bascule les classes à chaque clic
-  
-  // Ajoute ou enlève la classe "in-call" du bouton
-  callButton.classList.toggle('in-call');
-  
-  // Ajoute ou enlève la classe "hidden" sur les icônes
-  callIcon.classList.toggle('hidden');
-  hangupIcon.classList.toggle('hidden');
-});
+        // On bascule l'UI (couleur du bouton et icônes)
+        callButton.classList.toggle('in-call', inCall);
+        callIcon.classList.toggle('hidden', inCall);
+        hangupIcon.classList.toggle('hidden', !inCall);
 
+        // On exécute la logique d'appel
         if (inCall) {
             console.log(`Appel en cours vers : ${display.value}`);
         } else {
             console.log('Appel terminé.');
-            display.value = '';
+            display.value = ''; // On vide le champ après avoir raccroché
             updateCompositionBar();
         }
     });
 
+    // Clic sur le haut-parleur
     speakerButton.addEventListener('click', () => {
         speakerOn = !speakerOn;
         speakerButton.classList.toggle('active', speakerOn);
         console.log(`Haut-parleur: ${speakerOn ? 'Activé' : 'Désactivé'}`);
     });
-    // Erase last digit
+
+    // Clic sur le bouton Effacer (AJOUT)
     eraseButton.addEventListener('click', () => {
         display.value = display.value.slice(0, -1);
         updateCompositionBar();
     });
 
-    // Hold / Unhold
+    // Clic sur le bouton Mettre en attente (AJOUT)
     holdButton.addEventListener('click', () => {
         if (!inCall) {
             console.log("Impossible de mettre en attente : aucun appel en cours.");
             return;
         }
-
         onHold = !onHold;
         holdButton.classList.toggle('active', onHold);
         console.log(`Appel ${onHold ? 'mis en attente' : 'repris'}.`);
-           });
+    });
 }
 
 
